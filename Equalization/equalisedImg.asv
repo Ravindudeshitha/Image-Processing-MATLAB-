@@ -1,0 +1,27 @@
+
+function J = equalisedImg(I)
+
+    addpath('..\histogram');%histogramfunction in histogram folder
+
+    if length(size(I)) ==3
+        I = rgb2gray(I);
+    end
+
+    k = 256;
+    [m,n] =  size(I);
+    J = I;
+
+    h = histogram(I);
+    H = cumHist(h);
+
+    for i = 1:m
+        for j = 1:n
+            a = I(i,j);
+            J(i,j) = floor((H(a)* (k-1))/(m*n));
+        end
+    end
+    
+    subplot(1,3,3);bar(h1);title('Histogram of Original Image');hold on;
+    subplot(1,2,4);bar(h2);title('Histogram of Inverted Image');
+
+end
